@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1452036964 source:s:\cpp projs\battle\main.cpp
+	<iostream>
+	<stdlib.h>
+	<stdio.h>
+	<cstdio>
+	<time.h>
+
+1452040891 source:s:\cpp projs\battlewar\main.cpp
+	<iostream>
+	<stdlib.h>
+	<stdio.h>
+	<cstdio>
+	<time.h>
+
