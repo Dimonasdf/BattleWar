@@ -32,7 +32,7 @@ int random (int _min, int _max)
     int r = rand() % _max+_min;
     return r;
 }
-int attack (string weapon)
+int p_attack (string weapon)
 {
     if (weapon == "sword")
         {
@@ -54,6 +54,20 @@ int attack (string weapon)
         ehp -= _dmg3;
         mp -= _mcos3;
         hp -= _selfdmg3;
+        }
+    return 0;
+}
+int e_attack (string weapon)
+{
+        if (weapon == "sword")
+        {
+        cout << "The enemy used his sword." << endl << endl;
+        hp -= _dmg1;
+        }
+        if (weapon == "magic")
+        {
+        cout << "The enemy casts a Magic Missile." << endl << endl;
+        hp -= _dmg2;
         }
     return 0;
 }
@@ -98,7 +112,7 @@ case '1':
 {
 if (mp >= _mcos1)
 {
-    attack ("sword");
+    p_attack ("sword");
 
     if (ehp > 0)
     {
@@ -106,14 +120,12 @@ if (mp >= _mcos1)
         {
         case '1':
         {
-        cout << "The enemy used his sword." << endl << endl;
-        hp -= _dmg1;
+        e_attack ("sword");
         break;
         }
         case '2':
         {
-        cout << "The enemy casts a Magic Missile." << endl << endl;
-        hp -= _dmg2;
+        e_attack ("magic");
         break;
         }
         }
@@ -141,7 +153,7 @@ case '2':
 {
 if (mp >= _mcos2)
 {
-    attack ("magic");
+    p_attack ("magic");
 
     if (ehp > 0)
     {
@@ -149,14 +161,12 @@ if (mp >= _mcos2)
         {
         case '1':
         {
-        cout << "The enemy used his sword." << endl << endl;
-        hp -= _dmg1;
+        e_attack ("sword");
         break;
         }
         case '2':
         {
-        cout << "The enemy casts a Magic Missile." << endl << endl;
-        hp -= _dmg2;
+        e_attack ("magic");
         break;
         }
         }
@@ -185,7 +195,7 @@ case '3':
 {
 if (mp >= _mcos3)
 {
-    attack ("ult");
+    p_attack ("ult");
 
     if (ehp > 0)
     {
@@ -193,14 +203,12 @@ if (mp >= _mcos3)
         {
         case '1':
         {
-        cout << "The enemy used his sword." << endl << endl;
-        hp -= _dmg1;
+        e_attack ("sword");
         break;
         }
         case '2':
         {
-        cout << "The enemy casts a Magic Missile." << endl << endl;
-        hp -= _dmg2;
+        e_attack ("magic");
         break;
         }
         }
