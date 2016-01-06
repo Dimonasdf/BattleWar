@@ -145,7 +145,7 @@ switch (action)
             else
             {
                 e1 += 5;
-                cout << "You smashed the enemy with your sword. Experience with swords now is " << e1 << "." << endl;
+                cout << "You smashed the enemy with your sword. Experience with swords is now " << e1 << "." << endl;
                 win();
                 return 0;
             }
@@ -187,7 +187,7 @@ switch (action)
             else
             {
                 e2 += 5;
-                cout << "The eneny was destroyed. Experience with magic now is " << e2 << "." << endl;
+                cout << "The eneny was destroyed. Experience with magic is now " << e2 << "." << endl;
                 win();
                 return 0;
             }
@@ -229,7 +229,7 @@ switch (action)
             else
             {
                 e2 += 15;
-                cout << "The enemy was annihilated. Experience with magic now is " << e2 << "." << endl;
+                cout << "The enemy was annihilated. Experience with magic is now " << e2 << "." << endl;
                 win();
                 return 0;
             }
