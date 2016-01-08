@@ -4,54 +4,152 @@
 #include <cstdio>
 #include <time.h>
 #include <math.h>
+#include <conio.h>
 
-#define _hp      100                     //хп гг
-#define _mp      50                     //мп гг
-#define _ehp     100                     //хп врага
+using namespace std;
 
-#define _dmg1     1                     //урон 1 способности врага
-#define _dmg2     2                     //урон 2 способности врага
+#define _hp      100                     //your HP
+#define _mp      50                      //your MP
+#define _ehp     100                     //enemy HP
 
-using namespace std;                    //хз что такое, но без него не работает
+#define _dmg1     1                      //enemy's 1 ability damage
+#define _dmg2     2                      //enemy's 2 ability damage
 
-int hp = _hp, mp = _mp, ehp = _ehp;     //инты
+#define x 20                             // room rows
+#define y 45                             // room columns
+#define q 10                             // quantity of enemies
+
+int a = 0, b = 0;                        // player position variables
+int field [x][y] = {};                   //field array
+int _swap [q];                           //swap array for enemy positions
+
+int hp = _hp, mp = _mp, ehp = _ehp;
 //int x = 3, y = 3;                     //Х - способность, Y - значение характеристики
 int ac[3][3] =
 {
-    {  1,  0, 0 },                      //1 способность - урон врагу / мана / урон себе
-    {  2,  1, 0 },                      //2 способность - урон врагу / мана / урон себе
-    { 10, 15, 1 }                       //3 способность - урон врагу / мана / урон себе
+    {  1,  0, 0 },                      //1 ability - damage to enemy / mana cost / self damage
+    {  2,  1, 0 },                      //2 ability - damage to enemy / mana cost / self damage
+    { 10, 15, 1 }                       //3 ability - damage to enemy / mana cost / self damage
 };
-int e1 = 0, e2 = 0;                     //опыт
-int a1 = 0, a2 = 0, a3 = 0;             //амплификаторы урона
+int e1 = 0, e2 = 0;                     //experience - swords / magic
+int a1 = 0, a2 = 0, a3 = 0;             //damage increase due to certain experience - swords / missile / summon
 
-char action;                            //чары
+char action;
 
-int random (int _min, int _max)         //мегарандом от Димона
-{
-    int a = rand() % 1000+1;
-    int b = time(NULL);
-    srand (a*b);
-    int r = rand() % _max+_min;
-    return r;
-}
-void win ()                             //вин месседж
+void win ()                             //battle win message
 {
     cout << "You win." << endl << endl;
     system("pause");
 }
-void lose ()                            //луз месседж
+void lose ()                            //battle lose message
 {
     cout << "You lose." << endl << endl;
     system("pause");
 }
-void nomana ()                          //нет маны месседж
+void nomana ()                          //no mana message
 {
     cout << "Not enough mana." << endl << endl;
     system("pause");
 }
 
-    int p_attack (string weapon)            //атака игрока
+
+
+int random (int _min, int _max)         //megarandom by Dimonasdf
+{
+        srand ((rand() % 10000+1)*time(0)*clock());
+        int r = rand() % _max+_min;
+        return r;
+}
+
+
+
+int main()
+{
+for (int p=0; p<q; p++)
+{
+    _swap [p] = random(0,x);
+    field [_swap[p]][random (0,y)] = 2;
+}
+
+label:
+{
+    {
+    field [a][b] = 1;
+    system("cls");
+    for (int i=0;i<x;i++)
+        {
+        for (int j=0;j<y;j++)
+            {
+            cout << field [i][j];
+            }
+        cout << endl;
+        }
+        switch (getch())
+        {
+            case '4':
+            {
+                field [a][b] = 0;
+                if (b>0)
+                {
+                b--;
+                break;
+                }
+                else
+                {
+                break;
+                }
+            }
+            case '8':
+            {
+                field [a][b] = 0;
+                if (a>0)
+                {
+                a--;
+                break;
+                }
+                else
+                {
+                break;
+                }
+            }
+            case '6':
+            {
+                field [a][b] = 0;
+                if (b<y-1)
+                {
+                b++;
+                break;
+                }
+                else
+                {
+                break;
+                }
+            }
+            case '2':
+            {
+                field [a][b] = 0;
+                if (a<x-1)
+                {
+                a++;
+                break;
+                }
+                else
+                {
+                break;
+                }
+            }
+            default:
+            {
+                break;
+            }
+        }
+    }
+goto label;
+}
+
+return 0;
+}
+    int p_attack (string weapon)            //player's attack
 {
     if (weapon == "sword")
         {
@@ -82,7 +180,7 @@ void nomana ()                          //нет маны месседж
         }
     return 0;
 }
-    int e_attack (string weapon)            //атака врага
+    int e_attack (string weapon)            //enemy's attack
 {
         if (weapon == "sword")
         {
@@ -98,7 +196,7 @@ void nomana ()                          //нет маны месседж
     return 0;
 }
 
-int main()
+int fight()                                 //fight module (works well standalone but is not yet implemented in the moving sequence)
 {
 
 while (1==1)
@@ -115,10 +213,8 @@ cout << "Enemy HP: " << ehp << endl
 << "(1) Attack with sword (Damage: " << ac[0][0] + a1 << ", Mana cost: " << ac[0][1] << ", SelfDamage: " << ac [0][2] << ")" << endl
 << "(2) Use magic missile (Damage: " << ac[1][0] + a2 << ", Mana cost: " << ac[1][1] << ", SelfDamage: " << ac [1][2] << ")" << endl
 << "(3) Summon demon    (Damage: " << ac[2][0] + a3 << ", Mana cost: " << ac[2][1] << ", SelfDamage: " << ac [2][2] << ")" << endl << endl;
-cin >> action;
-cout << endl << "Status:" << endl;
 
-switch (action)
+switch (getch())
 {
     case '1':
     {
@@ -249,6 +345,7 @@ switch (action)
     default:
     {
         cout << "Ability not learned." << endl << endl;
+        system("pause");
         break;
     }
 
@@ -257,5 +354,6 @@ switch (action)
 
 } //while
 return 0;
-} //main
+} //fight
+
 

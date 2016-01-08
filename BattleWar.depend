@@ -6,13 +6,33 @@
 	<cstdio>
 	<time.h>
 
-1452103689 source:s:\cpp projs\battlewar\main.cpp
+1452265471 source:s:\cpp projs\battlewar\main.cpp
 	<iostream>
 	<stdlib.h>
 	<stdio.h>
 	<cstdio>
 	<time.h>
 	<math.h>
+	<conio.h>
+	"random.cpp"
 
 1452086803 source:s:\cpp projs\battlewar\fight.cpp
+
+1452265503 s:\cpp projs\battlewar\random.cpp
+	<time.h>
+	<math.h>
+
+1452265946 source:s:\cpp projs\battlewar\battlewar.cpp
+	<iostream>
+	<stdlib.h>
+	<stdio.h>
+	<cstdio>
+	<time.h>
+	<math.h>
+	<conio.h>
+	"random.h"
+
+1452265568 s:\cpp projs\battlewar\random.h
+	<stdlib.h>
+	<time.h>
 
