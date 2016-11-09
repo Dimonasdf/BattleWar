@@ -22,7 +22,7 @@
 	<time.h>
 	<math.h>
 
-1452265946 source:s:\cpp projs\battlewar\battlewar.cpp
+1452431360 source:s:\cpp projs\battlewar\battlewar.cpp
 	<iostream>
 	<stdlib.h>
 	<stdio.h>
@@ -30,9 +30,17 @@
 	<time.h>
 	<math.h>
 	<conio.h>
-	"random.h"
 
 1452265568 s:\cpp projs\battlewar\random.h
 	<stdlib.h>
 	<time.h>
+
+1478722305 source:s:\__projects__\cpp projects\battlewar\battlewar.cpp
+	<iostream>
+	<stdlib.h>
+	<stdio.h>
+	<cstdio>
+	<time.h>
+	<math.h>
+	<conio.h>
 

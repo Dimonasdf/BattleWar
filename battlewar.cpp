@@ -8,77 +8,86 @@
 
 using namespace std;
 
-#define _hp      100                     //your HP
-#define _mp      50                      //your MP
-#define _ehp     100                     //enemy HP
+#define _hp      100                        //your HP
+#define _mp      50                         //your MP
+#define _ehp     100                         //enemy HP
 
-#define _dmg1     1                      //enemy's 1 ability damage
-#define _dmg2     2                      //enemy's 2 ability damage
-
-#define x 20                             // room rows
-#define y 45                             // room columns
-#define q 10                             // quantity of enemies
-
-int a = 0, b = 0;                        // player position variables
-int field [x][y] = {};                   //field array
-int _swap [q];                           //swap array for enemy positions
+#define _dmg1     1                          //enemy's 1 ability damage
+#define _dmg2     2                          //enemy's 2 ability damage
 
 int hp = _hp, mp = _mp, ehp = _ehp;
-//int x = 3, y = 3;                     //’ - способность, Y - значение характеристики
+
 int ac[3][3] =
 {
-    {  1,  0, 0 },                      //1 ability - damage to enemy / mana cost / self damage
-    {  2,  1, 0 },                      //2 ability - damage to enemy / mana cost / self damage
-    { 10, 15, 1 }                       //3 ability - damage to enemy / mana cost / self damage
+    {  1,  0, 0 },                           //1 ability - damage to enemy / mana cost / self damage
+    {  2,  1, 0 },                           //2 ability - damage to enemy / mana cost / self damage
+    { 10, 15, 1 }                            //3 ability - damage to enemy / mana cost / self damage
 };
-int e1 = 0, e2 = 0;                     //experience - swords / magic
-int a1 = 0, a2 = 0, a3 = 0;             //damage increase due to certain experience - swords / missile / summon
+int e1 = 0, e2 = 0;                          //experience - swords / magic
+int a1 = 0, a2 = 0, a3 = 0;                  //damage increase due to certain experience - swords / missile / summon
 
 char action;
 
-void win ()                             //battle win message
+void win ()                                  //battle win message
 {
     cout << "You win." << endl << endl;
     system("pause");
 }
-void lose ()                            //battle lose message
+void lose ()                                 //battle lose message
 {
     cout << "You lose." << endl << endl;
     system("pause");
 }
-void nomana ()                          //no mana message
+void nomana ()                               //no mana message
 {
     cout << "Not enough mana." << endl << endl;
     system("pause");
 }
 
-
-
-int random (int _min, int _max)         //megarandom by Dimonasdf
+int random (int _min, int _diff)              //megarandom by Dimonasdf, return intenger between _min and _min+_diff
 {
-        srand ((rand() % 10000+1)*time(0)*clock());
-        int r = rand() % _max+_min;
-        return r;
+    srand ((rand() % 10000+1)*time(0)*clock());
+    int r = _min + rand() % (_diff+1);
+    return r;
 }
 
-
+int _rows = random (10, 10);                 //10 to 20
+int _columns = random (15, 10);              //15 to 25
+int a = random (0, _rows);                     //player position variables
+int b = random (0, _columns);
 
 int main()
 {
-for (int p=0; p<q; p++)
-{
-    _swap [p] = random(0,x);
-    field [_swap[p]][random (0,y)] = 2;
-}
+    int field [_rows][_columns] = {};            //field array (filled with zeroes?)
 
-label:
+    //create enemies
+    int q = 10;                                  //quantity here
+    int _swap [q];
+    int source_array [_rows][_columns] = {};
+    for (int gen_p=0; gen_p<q; gen_p++)
+    {
+        _swap [gen_p] = random(0,_rows); //
+        source_array [_swap[gen_p]][random (0,_columns)] = 2; //filling field with generated stuff, while actually generating it //symbol here
+    }
+
+    //place enemies on the field
+    for (int field_fill_rows=0; field_fill_rows<_rows; field_fill_rows++)
+    {
+        for (int field_fill_columns=0; field_fill_columns<_columns; field_fill_columns++)
+        {
+            field [field_fill_rows][field_fill_columns] = source_array [field_fill_rows][field_fill_columns];
+        }
+    }
+
+    //walk
+while (1)
 {
     {
     field [a][b] = 1;
     system("cls");
-    for (int i=0;i<x;i++)
+    for (int i=0;i<_rows;i++)
         {
-        for (int j=0;j<y;j++)
+        for (int j=0;j<_columns;j++)
             {
             cout << field [i][j];
             }
@@ -115,7 +124,7 @@ label:
             case '6':
             {
                 field [a][b] = 0;
-                if (b<y-1)
+                if (b<_columns-1)
                 {
                 b++;
                 break;
@@ -128,7 +137,7 @@ label:
             case '2':
             {
                 field [a][b] = 0;
-                if (a<x-1)
+                if (a<_rows-1)
                 {
                 a++;
                 break;
@@ -138,13 +147,17 @@ label:
                 break;
                 }
             }
+            case '0':
+                {
+                    return 0;
+                }
             default:
             {
                 break;
             }
         }
     }
-goto label;
+//goto label;
 }
 
 return 0;
@@ -199,7 +212,7 @@ return 0;
 int fight()                                 //fight module (works well standalone but is not yet implemented in the moving sequence)
 {
 
-while (1==1)
+while (1)
 {
 system("cls");
 
@@ -283,7 +296,7 @@ switch (getch())
             else
             {
                 e2 += 5;
-                cout << "The eneny was destroyed. Experience with magic is now " << e2 << "." << endl;
+                cout << "The enemy was destroyed. Experience with magic is now " << e2 << "." << endl;
                 win();
                 return 0;
             }
