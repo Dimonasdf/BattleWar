@@ -8,9 +8,9 @@
 
 using namespace std;
 
-#define _hp      100                        //your HP
-#define _mp      50                         //your MP
-#define _ehp     100                         //enemy HP
+#define _hp      100                         //your HP
+#define _mp      50                          //your MP
+#define _ehp     20                         //enemy HP
 
 #define _dmg1     1                          //enemy's 1 ability damage
 #define _dmg2     2                          //enemy's 2 ability damage
@@ -51,117 +51,6 @@ int random (int _min, int _diff)              //megarandom by Dimonasdf, return 
     return r;
 }
 
-int _rows = random (10, 10);                 //10 to 20
-int _columns = random (15, 10);              //15 to 25
-int a = random (0, _rows);                     //player position variables
-int b = random (0, _columns);
-
-int main()
-{
-    int field [_rows][_columns] = {};            //field array (filled with zeroes?)
-
-    //create enemies
-    int q = 10;                                  //quantity here
-    int _swap [q];
-    int source_array [_rows][_columns] = {};
-    for (int gen_p=0; gen_p<q; gen_p++)
-    {
-        _swap [gen_p] = random(0,_rows); //
-        source_array [_swap[gen_p]][random (0,_columns)] = 2; //filling field with generated stuff, while actually generating it //symbol here
-    }
-
-    //place enemies on the field
-    for (int field_fill_rows=0; field_fill_rows<_rows; field_fill_rows++)
-    {
-        for (int field_fill_columns=0; field_fill_columns<_columns; field_fill_columns++)
-        {
-            field [field_fill_rows][field_fill_columns] = source_array [field_fill_rows][field_fill_columns];
-        }
-    }
-
-    //walk
-while (1)
-{
-    {
-    field [a][b] = 1;
-    system("cls");
-    for (int i=0;i<_rows;i++)
-        {
-        for (int j=0;j<_columns;j++)
-            {
-            cout << field [i][j];
-            }
-        cout << endl;
-        }
-        switch (getch())
-        {
-            case '4':
-            {
-                field [a][b] = 0;
-                if (b>0)
-                {
-                b--;
-                break;
-                }
-                else
-                {
-                break;
-                }
-            }
-            case '8':
-            {
-                field [a][b] = 0;
-                if (a>0)
-                {
-                a--;
-                break;
-                }
-                else
-                {
-                break;
-                }
-            }
-            case '6':
-            {
-                field [a][b] = 0;
-                if (b<_columns-1)
-                {
-                b++;
-                break;
-                }
-                else
-                {
-                break;
-                }
-            }
-            case '2':
-            {
-                field [a][b] = 0;
-                if (a<_rows-1)
-                {
-                a++;
-                break;
-                }
-                else
-                {
-                break;
-                }
-            }
-            case '0':
-                {
-                    return 0;
-                }
-            default:
-            {
-                break;
-            }
-        }
-    }
-//goto label;
-}
-
-return 0;
-}
     int p_attack (string weapon)            //player's attack
 {
     if (weapon == "sword")
@@ -229,6 +118,12 @@ cout << "Enemy HP: " << ehp << endl
 
 switch (getch())
 {
+//    case '0':
+//   {
+//        cout << "Running away." << endl;
+//        system("pause");
+//        return 0;
+//    }
     case '1':
     {
         if (mp >= ac[0][1])
@@ -369,4 +264,181 @@ switch (getch())
 return 0;
 } //fight
 
+int _rows = random (10, 10);                 //10 to 20
+int _columns = random (15, 10);              //15 to 25
+int a = random (0, _rows);                     //player position variables
+int b = random (0, _columns);
 
+int main()
+{
+    int field [_rows][_columns] = {0};            //field array (filled with zeroes?)
+
+    //create enemies
+    int q = 10;                                  //quantity here
+    int _swap [q];
+    int source_array [_rows][_columns] = {};
+    for (int gen_p=0; gen_p<q; gen_p++)
+    {
+        _swap [gen_p] = random(0,_rows); //
+        source_array [_swap[gen_p]][random (0,_columns)] = 2; //filling field with generated stuff, while actually generating it //symbol here
+    }
+
+    //place enemies on the field
+    for (int field_fill_rows=0; field_fill_rows<_rows; field_fill_rows++)
+    {
+        for (int field_fill_columns=0; field_fill_columns<_columns; field_fill_columns++)
+        {
+            field [field_fill_rows][field_fill_columns] = source_array [field_fill_rows][field_fill_columns];
+        }
+    }
+
+    //walk
+    while (1)
+    {
+    field [a][b] = 1;
+    system("cls");
+    for (int i=0;i<_rows;i++)
+        {
+        for (int j=0;j<_columns;j++)
+            {
+            cout << field [i][j];
+            }
+        cout << endl;
+        }
+        switch (getch())
+        {
+            case '4':
+            {
+                if (field [a][b-1]==2)
+                {
+                    cout << "You attack wild Dvoika." << endl;
+                    system("pause");
+                    fight();
+                    field [a][b] = 0;
+                    {
+                    b--;
+                    break;
+                    }
+                }
+                else
+                {
+                    field [a][b] = 0;
+                    if (b>0)
+                    {
+                    b--;
+                    break;
+                    }
+                    else
+                    {
+                    cout << "You see a wall there, you can't go past it." << endl;
+                    system("pause");
+                    break;
+                    }
+                }
+            }
+            case '8':
+            {
+                if (field [a-1][b]==2)
+                {
+                    cout << "You attack wild Dvoika." << endl;
+                    system("pause");
+                    fight();
+                    field [a][b] = 0;
+                    {
+                    a--;
+                    break;
+                    }
+                }
+                else
+                {
+                    field [a][b] = 0;
+                    if (a>0)
+                    {
+                    a--;
+                    break;
+                    }
+                    else
+                    {
+                    cout << "You see a wall there, you can't go past it." << endl;
+                    system("pause");
+                    break;
+                    }
+                }
+            }
+            case '6':
+            {
+                if (field [a][b+1]==2)
+                {
+                    cout << "You attack wild Dvoika." << endl;
+                    system("pause");
+                    fight();
+                    field [a][b] = 0;
+                    {
+                    b++;
+                    break;
+                    }
+                }
+                else
+                {
+                    field [a][b] = 0;
+                    if (b<_columns-1)
+                    {
+                    b++;
+                    break;
+                    }
+                    else
+                    {
+                    cout << "You see a wall there, you can't go past it." << endl;
+                    system("pause");
+                    break;
+                    }
+                }
+            }
+            case '2':
+            {
+                if (field [a+1][b]==2)
+                {
+                    cout << "You attack wild Dvoika." << endl;
+                    system("pause");
+                    fight();
+                    field [a][b] = 0;
+                    {
+                    a++;
+                    break;
+                    }
+                }
+                else
+                {
+                    field [a][b] = 0;
+                    if (a<_rows-1)
+                    {
+                    a++;
+                    break;
+                    }
+                    else
+                    {
+                    cout << "You see a wall there, you can't go past it." << endl;
+                    system("pause");
+                    break;
+                    }
+                }
+            }
+            case '0':
+                {
+                cout << "Quitting." << endl;
+                return 0;
+                }
+            default:
+            {
+                cout << "You waited for a little." << endl;
+                system("pause");
+                break;
+            }
+        }
+    }
+
+
+fight();
+
+return 0;
+}
